@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @StateObject private var taskManagerVM = TaskManagerViewModel.sample
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
-        }
-        .padding()
+        TaskManagerView(vm: taskManagerVM)
+            .onAppear {
+                Task {
+                    // await taskManagerVM.load()
+                }
+            }
     }
 }
 
