@@ -8,13 +8,38 @@
 import SwiftUI
 
 struct TaskView: View {
-    
+    @Environment(\.dismiss) private var dismiss
     @ObservedObject var vm: TaskViewModel
     
     var body: some View {
         VStack {
-            Text(vm.title)
             TextField("Edit Title", text: vm.titleBinding)
+                .multilineTextAlignment(.center)
+            Group {
+                if (vm.isComplete) {
+                    Text("Complete").foregroundColor(.green)
+                } else {
+                    Text("Incomplete").foregroundColor(.indigo)
+                }
+            }
+            .padding()
+            Button(vm.isComplete
+                   ? "Mark as Incomplete"
+                   : "Mark as Complete") {
+                if (vm.isComplete) {
+                    vm.send(.markIncomplete)
+                } else {
+                    vm.send(.markComplete)
+                }
+            }
+            Button {
+                dismiss()
+                vm.send(.deleteSelf)
+            } label: {
+                Text("Delete")
+                    .foregroundColor(.red)
+            }
+            .padding()
         }
     }
 }

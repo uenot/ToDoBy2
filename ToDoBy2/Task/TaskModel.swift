@@ -11,18 +11,28 @@ struct TaskModel: Identifiable, Codable {
     typealias ID = UUID
     private(set) var id = UUID()
     private(set) var title: String
+    private(set) var isComplete = false
 }
 
 extension TaskModel {
     
     enum Action {
         case editTitle(String)
+        case markComplete
+        case markIncomplete
+        case deleteSelf
     }
     
     static func reducer(model: inout Self, action: TaskModel.Action) -> Void {
         switch action {
         case let .editTitle(newTitle):
             model.title = newTitle
+        case .markComplete:
+            model.isComplete = true
+        case .markIncomplete:
+            model.isComplete = false
+        case .deleteSelf:
+            break  // handled in DayViewModel
         }
     }
 }

@@ -13,7 +13,12 @@ extension DayViewModel {
     func createTaskViewModel(id: TaskModel.ID) -> TaskViewModel {
         let convertModel: (DayModel) -> TaskModel = { model in model.tasks.first(where: { $0.id == id })! }
         let convertAction: (TaskModel.Action) -> DayModel.Action = { action in
-                .editTask(id, action)
+            switch action {
+            case .deleteSelf:
+                return .removeTask(id)
+            default:
+                return .editTask(id, action)
+            }
         }
         return createSubViewModel(convertModel, convertAction)
     }

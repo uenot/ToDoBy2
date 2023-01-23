@@ -15,7 +15,31 @@ struct DayView: View {
         NavigationStack {
             List {
                 ForEach(vm.tasks) { task in
-                    NavigationLink(task.title, value: task.id)
+                    NavigationLink(value: task.id) {
+                        Text(task.title)
+                            .foregroundColor(task.isComplete ? .green : nil)
+                            .strikethrough(task.isComplete)
+                            .swipeActions(edge: .leading) {
+                                if (task.isComplete) {
+                                    Button("Incomplete") {
+                                        vm.send(.editTask(task.id, .markIncomplete))
+                                    }
+                                    .tint(.indigo)
+                                } else {
+                                    Button("Complete") {
+                                        vm.send(.editTask(task.id, .markComplete))
+                                    }
+                                    .tint(.green)
+                                }
+                            }
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive) {
+                                    vm.send(.removeTask(task.id))
+                                } label: {
+                                    Text("Delete")
+                                }
+                            }
+                    }
                 }
             }
             .navigationTitle(vm.header)
@@ -23,8 +47,8 @@ struct DayView: View {
             .navigationDestination(for: TaskModel.ID.self) { id in
                 TaskView(vm: vm.createTaskViewModel(id: id))
             }
-            Button("Add Dummy Task") {
-                vm.send(.addTask(TaskModel(title: "new task!!!!!")))
+            Button("Add Task") {
+                vm.send(.addTask(TaskModel(title: "New Task")))
             }
         }
     }
