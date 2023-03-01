@@ -11,8 +11,29 @@ struct DayView: View {
     
     @ObservedObject var vm: DayViewModel
     
+    @Binding var displayDatePicker: Bool
+    
+    let jumpToDate: (Date) -> Void
+    var selectedDate: Binding<Date> {
+        Binding {
+            vm.date
+        } set: { newValue in
+            withAnimation {
+                displayDatePicker.toggle()
+            }
+            jumpToDate(newValue)
+        }
+    }
+    
     var body: some View {
         NavigationStack {
+            if (displayDatePicker) {
+                DatePicker("",
+                           selection: selectedDate,
+                           displayedComponents: [.date])
+                    .datePickerStyle(.graphical)
+                    .padding()
+            }
             List {
                 ForEach(vm.tasks) { task in
                     NavigationLink(value: task.id) {
@@ -41,14 +62,30 @@ struct DayView: View {
                             }
                     }
                 }
+                .onMove { source, destination in
+                    vm.send(.reorderTasks(source, destination))
+                }
             }
             .navigationTitle(vm.header)
-            .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                Button {
+                    withAnimation {
+                        displayDatePicker.toggle()
+                    }
+                } label: {
+                    Image(systemName: "calendar")
+                }
+                EditButton()
+            }
             .navigationDestination(for: TaskModel.ID.self) { id in
                 TaskView(vm: vm.createTaskViewModel(id: id))
             }
             Button("Add Task") {
                 vm.send(.addTask(TaskModel(title: "New Task")))
+            }
+            .padding()
+            Button("Jump to Today") {
+                jumpToDate(Date())
             }
         }
     }
@@ -56,6 +93,7 @@ struct DayView: View {
 
 struct DayView_Previews: PreviewProvider {
     static var previews: some View {
-        DayView(vm: DayViewModel.sample)
+        DayView(vm: DayViewModel.sample, displayDatePicker: .constant(false),
+                jumpToDate: { _ in } )
     }
 }

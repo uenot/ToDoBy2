@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DayModel: Identifiable, Codable {
+struct DayModel: Identifiable, Codable, Equatable {
     typealias ID = UUID
     private(set) var id = UUID()
     let date: Date
@@ -20,6 +20,8 @@ extension DayModel {
         case addTask(TaskModel)
         case removeTask(TaskModel.ID)
         case editTask(TaskModel.ID, TaskModel.Action)
+        case reorderTasks(IndexSet, Int)
+        case changeDay(Date)
     }
     
     static func reducer(model: inout Self, action: DayModel.Action) -> Void {
@@ -31,6 +33,10 @@ extension DayModel {
         case let .editTask(id, subAction):
             let i = model.tasks.firstIndex(where: { $0.id == id })!
             TaskModel.reducer(model: &model.tasks[i], action: subAction)
+        case let .reorderTasks(source, destination):
+            model.tasks.move(fromOffsets: source, toOffset: destination)
+        case .changeDay:
+            break
         }
     }
 }
@@ -38,7 +44,6 @@ extension DayModel {
 extension DayModel {
     static let samples = [
         DayModel(date: Date(), tasks: Array(TaskModel.samples[0..<4])),
-        DayModel(date: Calendar.current.date(byAdding: .day, value: 1, to: Date())!,
-                 tasks: Array(TaskModel.samples[4..<8]))
+        DayModel(date: Date()+1, tasks: Array(TaskModel.samples[4..<8]))
     ]
 }

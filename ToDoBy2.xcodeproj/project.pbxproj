@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A03DB19229AE8C0B0017E77A /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03DB19129AE8C0B0017E77A /* DateExtension.swift */; };
 		A0894F672974D2D80016C4AF /* TaskManagerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0894F662974D2D80016C4AF /* TaskManagerModel.swift */; };
 		A0894F692974D2FB0016C4AF /* TaskManagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0894F682974D2FB0016C4AF /* TaskManagerViewModel.swift */; };
 		A0894F6B2974D3220016C4AF /* TaskManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0894F6A2974D3220016C4AF /* TaskManagerView.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A03DB19129AE8C0B0017E77A /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		A0894F662974D2D80016C4AF /* TaskManagerModel.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = TaskManagerModel.swift; sourceTree = "<group>"; };
 		A0894F682974D2FB0016C4AF /* TaskManagerViewModel.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = TaskManagerViewModel.swift; sourceTree = "<group>"; };
 		A0894F6A2974D3220016C4AF /* TaskManagerView.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = TaskManagerView.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				A0894F6C2974D36D0016C4AF /* Day */,
 				A0894F652974D2C90016C4AF /* TaskManager */,
 				A0894F7C2975DC530016C4AF /* ViewModel.swift */,
+				A03DB19129AE8C0B0017E77A /* DateExtension.swift */,
 				A0AA7908296E443D00D7DA09 /* Assets.xcassets */,
 				A0AA790A296E443D00D7DA09 /* ToDoBy2.entitlements */,
 				A0AA790B296E443D00D7DA09 /* Preview Content */,
@@ -194,6 +197,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0894F672974D2D80016C4AF /* TaskManagerModel.swift in Sources */,
+				A03DB19229AE8C0B0017E77A /* DateExtension.swift in Sources */,
 				A0894F722974D3C40016C4AF /* DayView.swift in Sources */,
 				A0894F6B2974D3220016C4AF /* TaskManagerView.swift in Sources */,
 				A0894F772974D9020016C4AF /* TaskView.swift in Sources */,

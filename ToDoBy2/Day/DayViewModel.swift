@@ -5,7 +5,7 @@
 //  Created by Toby Ueno on 1/15/23.
 //
 
-import Foundation
+import SwiftUI
 
 typealias DayViewModel = ViewModel<DayModel, DayModel.Action>
 
@@ -24,6 +24,7 @@ extension DayViewModel {
     }
     
     var tasks: [TaskModel] { model.tasks }
+    var date: Date { model.date }
     
     var header: String {
         "Tasks for " + model.date.formatted(date: .abbreviated, time: .omitted)

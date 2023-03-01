@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TaskModel: Identifiable, Codable {
+struct TaskModel: Identifiable, Codable, Equatable {
     typealias ID = UUID
     private(set) var id = UUID()
     private(set) var title: String
