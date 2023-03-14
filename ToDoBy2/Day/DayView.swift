@@ -12,6 +12,7 @@ struct DayView: View {
     @ObservedObject var vm: DayViewModel
     
     @Binding var displayDatePicker: Bool
+    @Environment(\.editMode) var editMode
     
     let jumpToDate: (Date) -> Void
     var selectedDate: Binding<Date> {
@@ -62,9 +63,7 @@ struct DayView: View {
                             }
                     }
                 }
-                .onMove { source, destination in
-                    vm.send(.reorderTasks(source, destination))
-                }
+                .onMove(perform: { s, d in vm.send(.reorderTasks(s, d))})
             }
             .navigationTitle(vm.header)
             .toolbar {
@@ -87,6 +86,7 @@ struct DayView: View {
             Button("Jump to Today") {
                 jumpToDate(Date())
             }
+            Text(editMode?.wrappedValue.isEditing.description ?? "none")
         }
     }
 }

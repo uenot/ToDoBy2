@@ -24,9 +24,11 @@ struct TaskManagerView: View {
         } .onEnded { value in
             offset = min(width, max(-width, value.translation.width))
             let predictedOffset = value.predictedEndTranslation.width
-            if (offset < -width / 3 || predictedOffset < -width) {
+            if (offset/width < -Constants.offsetRatio
+                || predictedOffset/width < -Constants.predictedOffsetRatio) {
                 changeDay(to: vm.currentDate + 1, width: width)
-            } else if (offset > width / 3 || predictedOffset > width) {
+            } else if (offset/width > Constants.offsetRatio
+                       || predictedOffset/width > Constants.predictedOffsetRatio) {
                 changeDay(to: vm.currentDate - 1, width: width)
             } else {
                 changeDay(to: vm.currentDate, width: width)
@@ -45,24 +47,25 @@ struct TaskManagerView: View {
     }
     
     func changeDay(to date: Date, width: CGFloat) {
-        print(date.description)
         if (Calendar.current.compare(date, to: vm.currentDate, toGranularity: .day) == .orderedDescending){
             window[2] = vm.getDay(for: date)
-            withAnimation(.easeOut(duration: 0.5)) {
+            withAnimation(Constants.slideAnimation) {
                 offset = -width
             }
         } else if (Calendar.current.compare(date, to: vm.currentDate, toGranularity: .day) == .orderedAscending) {
             window[0] = vm.getDay(for: date)
-            withAnimation(.easeOut(duration: 0.5)) {
+            withAnimation(Constants.slideAnimation) {
                 offset = width
             }
         } else {
-            withAnimation(.easeOut(duration: 0.5)) {
+            withAnimation(Constants.slideAnimation) {
                 offset = 0
             }
         }
+        // concurrency issues: what happens when swiping twice quickly?
+        // should cancel all previous shifts, only take most recent swipe
         Task {
-            try await Task.sleep(until: .now + .seconds(0.5), clock: .continuous)
+            try await Task.sleep(until: .now + .seconds(Constants.slideDuration), clock: .continuous)
             vm.send(.setDate(date))
             setWindow(to: date)
             offset = 0
@@ -94,6 +97,7 @@ struct TaskManagerView: View {
         }
         .onChange(of: vm.currentDate) { _ in
             displayDatePicker = false
+            setWindow(to: vm.currentDate) // necessary for first load-in
         }
         .onAppear {
             setWindow(to: vm.currentDate)

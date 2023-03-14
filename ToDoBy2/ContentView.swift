@@ -15,7 +15,7 @@ struct ContentView: View {
         TaskManagerView(vm: taskManagerVM)
             .onAppear {
                 Task {
-                     await taskManagerVM.load()
+                    await taskManagerVM.load()
                 }
             }
     }
