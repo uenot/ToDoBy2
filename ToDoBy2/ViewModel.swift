@@ -35,14 +35,14 @@ import SwiftUI
         return vm
     }
     
-    func binding<Value>(
-        for keyPath: KeyPath<Model, Value>,
-        convertToAction: @escaping (Value) -> Action
-    ) -> Binding<Value> {
-        Binding<Value> {
-            self.model[keyPath: keyPath]
-        } set: { newValue in
-            self.send(convertToAction(newValue))
-        }
-    }
+//    func binding<Value>(
+//        for keyPath: KeyPath<Model, Value>,
+//        convertToAction: @escaping (Value) -> Action
+//    ) -> Binding<Value> {
+//        Binding<Value> {
+//            self.model[keyPath: keyPath]
+//        } set: { newValue in
+//            self.send(convertToAction(newValue))
+//        }
+//    }
 }

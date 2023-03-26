@@ -32,7 +32,7 @@ extension TaskModel {
         case .markIncomplete:
             model.isComplete = false
         case .deleteSelf:
-            break  // handled in TaskListModel
+            break  // handled in DayModel
         }
     }
 }

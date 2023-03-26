@@ -12,9 +12,6 @@ typealias TaskViewModel = ViewModel<TaskModel, TaskModel.Action>
 extension TaskViewModel {
     var title: String { model.title }
     var isComplete: Bool { model.isComplete }
-    var titleBinding: Binding<String> {
-        self.binding(for: \.title, convertToAction: { newTitle in .editTitle(newTitle) })
-    }
 }
 
 extension TaskViewModel {

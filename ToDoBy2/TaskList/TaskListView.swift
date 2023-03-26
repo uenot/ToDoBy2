@@ -46,9 +46,11 @@ struct TaskListView: View {
                             Text("Delete")
                         }
                         Button("Move to \(vm.otherType.description)") {
-                            vm.send(.moveTask(task.id))
+                            withAnimation(.easeIn) {
+                                vm.send(.moveTask(task.id))
+                            }
                         }
-                        .tint(Color.yellow)
+                        .tint(.yellow)
                     }
             }
         }
@@ -60,8 +62,10 @@ struct TaskListView: View {
 
 struct TaskListView_Previews: PreviewProvider {
     static var previews: some View {
-        List {
-            TaskListView(vm: TaskListViewModel.samples[0])
+        NavigationStack {
+            List {
+                TaskListView(vm: TaskListViewModel.samples[0])
+            }
         }
     }
 }

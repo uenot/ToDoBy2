@@ -10,10 +10,19 @@ import SwiftUI
 struct TaskView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var vm: TaskViewModel
+    @State private var tempTitle: String
+    
+    init(vm: TaskViewModel) {
+        self.vm = vm
+        self._tempTitle = State(initialValue: vm.title)
+    }
     
     var body: some View {
         VStack {
-            TextField("Edit Title", text: vm.titleBinding)
+            TextField("Edit Title", text: $tempTitle)
+                .onChange(of: tempTitle) { newTitle in
+                    vm.send(.editTitle(newTitle))
+                }
                 .multilineTextAlignment(.center)
             Group {
                 if (vm.isComplete) {
@@ -33,8 +42,8 @@ struct TaskView: View {
                 }
             }
             Button {
-                dismiss()
                 vm.send(.deleteSelf)
+                dismiss()
             } label: {
                 Text("Delete")
                     .foregroundColor(.red)
