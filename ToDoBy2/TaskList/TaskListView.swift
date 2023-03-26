@@ -21,36 +21,39 @@ struct TaskListView: View {
     }
     
     var body: some View {
-        Section {
-            ForEach(vm.tasks) { task in
-                NavigationLink(value: task.id) {
-                    Text(task.title)
-                        .foregroundColor(task.isComplete ? .green : nil)
-                        .strikethrough(task.isComplete)
-                        .swipeActions(edge: .leading) {
-                            if (task.isComplete) {
-                                Button("Incomplete") {
-                                    vm.send(.editTask(task.id, .markIncomplete))
-                                }
-                                .tint(.indigo)
-                            } else {
-                                Button("Complete") {
-                                    vm.send(.editTask(task.id, .markComplete))
-                                }
-                                .tint(.green)
+        ForEach(vm.tasks) { task in
+            NavigationLink(value: task.id) {
+                Text(task.title)
+                    .foregroundColor(task.isComplete ? .green : nil)
+                    .strikethrough(task.isComplete)
+                    .swipeActions(edge: .leading) {
+                        if (task.isComplete) {
+                            Button("Incomplete") {
+                                vm.send(.editTask(task.id, .markIncomplete))
                             }
-                        }
-                        .swipeActions(edge: .trailing) {
-                            Button(role: .destructive) {
-                                vm.send(.removeTask(task.id))
-                            } label: {
-                                Text("Delete")
+                            .tint(.indigo)
+                        } else {
+                            Button("Complete") {
+                                vm.send(.editTask(task.id, .markComplete))
                             }
+                            .tint(.green)
                         }
-                }
+                    }
+                    .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {
+                            vm.send(.removeTask(task.id))
+                        } label: {
+                            Text("Delete")
+                        }
+                        Button("Move to \(vm.otherType.description)") {
+                            vm.send(.moveTask(task.id))
+                        }
+                        .tint(Color.yellow)
+                    }
             }
-        } header: {
-            Text(title)
+        }
+        .onMove { source, destination in
+            vm.send(.reorderTasks(source, destination))
         }
     }
 }
@@ -58,7 +61,7 @@ struct TaskListView: View {
 struct TaskListView_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            TaskListView(vm: TaskListViewModel.sample)
+            TaskListView(vm: TaskListViewModel.samples[0])
         }
     }
 }

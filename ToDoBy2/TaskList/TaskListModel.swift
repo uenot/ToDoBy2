@@ -7,13 +7,32 @@
 
 import Foundation
 
-struct TaskListModel: Codable, Equatable {
+struct TaskListModel: Identifiable, Codable, Equatable {
+    typealias ID = UUID
+    private(set) var id = UUID()
     private(set) var tasks: [TaskModel]
     let type: ListType
+    var otherType: ListType {
+        switch type {
+        case .normal:
+            return .optional
+        case .optional:
+            return .normal
+        }
+    }
     
-    enum ListType: Codable {
+    enum ListType: Codable, CustomStringConvertible {
         case normal
         case optional
+        
+        var description: String {
+            switch self {
+            case .normal:
+                return "Normal"
+            case .optional:
+                return "Optional"
+            }
+        }
     }
 }
 
@@ -23,6 +42,7 @@ extension TaskListModel {
         case removeTask(TaskModel.ID)
         case editTask(TaskModel.ID, TaskModel.Action)
         case reorderTasks(IndexSet, Int)
+        case moveTask(TaskModel.ID)
     }
     
     static func reducer(model: inout Self, action: Self.Action) -> Void {
@@ -36,6 +56,15 @@ extension TaskListModel {
             TaskModel.reducer(model: &model.tasks[i], action: subAction)
         case let .reorderTasks(source, destination):
             model.tasks.move(fromOffsets: source, toOffset: destination)
+        case .moveTask:
+            break // handled in DayView
         }
     }
+}
+
+extension TaskListModel {
+    static var samples = [
+        TaskListModel(tasks: Array(TaskModel.samples[0..<4]), type: .normal),
+        TaskListModel(tasks: Array(TaskModel.samples[4..<8]), type: .optional)
+    ]
 }

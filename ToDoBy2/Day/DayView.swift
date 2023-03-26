@@ -12,7 +12,7 @@ struct DayView: View {
     @ObservedObject var vm: DayViewModel
     
     @Binding var displayDatePicker: Bool
-    @Environment(\.editMode) var editMode
+    @State var editMode: EditMode = .inactive
     
     let jumpToDate: (Date) -> Void
     var selectedDate: Binding<Date> {
@@ -28,6 +28,12 @@ struct DayView: View {
     
     var body: some View {
         NavigationStack {
+            Text(vm.header)
+                .font(.system(.largeTitle, design: .rounded).weight(.bold))
+                .opacity(vm.complete ? 0.75 : 1)
+                .strikethrough(vm.complete)
+                .foregroundColor(vm.complete ? .green : nil)
+                .animation(.easeOut(duration: 0.2), value: vm.complete)
             if (displayDatePicker) {
                 DatePicker("",
                            selection: selectedDate,
@@ -36,58 +42,42 @@ struct DayView: View {
                     .padding()
             }
             List {
-                ForEach(vm.tasks) { task in
-                    NavigationLink(value: task.id) {
-                        Text(task.title)
-                            .foregroundColor(task.isComplete ? .green : nil)
-                            .strikethrough(task.isComplete)
-                            .swipeActions(edge: .leading) {
-                                if (task.isComplete) {
-                                    Button("Incomplete") {
-                                        vm.send(.editTask(task.id, .markIncomplete))
-                                    }
-                                    .tint(.indigo)
-                                } else {
-                                    Button("Complete") {
-                                        vm.send(.editTask(task.id, .markComplete))
-                                    }
-                                    .tint(.green)
-                                }
-                            }
-                            .swipeActions(edge: .trailing) {
-                                Button(role: .destructive) {
-                                    vm.send(.removeTask(task.id))
-                                } label: {
-                                    Text("Delete")
-                                }
-                            }
+                ForEach(vm.taskLists) { taskList in
+                    if (taskList.tasks.count > 0) {
+                        Section {
+                            TaskListView(vm: vm.createTaskListViewModel(id: taskList.id))
+                        } header: {
+                            Text(taskList.type.description)
+                        }
                     }
                 }
-                .onMove(perform: { s, d in vm.send(.reorderTasks(s, d))})
-            }
-            .navigationTitle(vm.header)
-            .toolbar {
-                Button {
-                    withAnimation {
-                        displayDatePicker.toggle()
-                    }
-                } label: {
-                    Image(systemName: "calendar")
-                }
-                EditButton()
             }
             .navigationDestination(for: TaskModel.ID.self) { id in
                 TaskView(vm: vm.createTaskViewModel(id: id))
             }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        withAnimation {
+                            displayDatePicker.toggle()
+                        }
+                    } label: {
+                        Image(systemName: "calendar")
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    EditButton()
+                }
+            }
             Button("Add Task") {
-                vm.send(.addTask(TaskModel(title: "New Task")))
+                vm.send(.editList(vm.baseList.id, .addTask(TaskModel(title: "New Task"))))
             }
             .padding()
             Button("Jump to Today") {
                 jumpToDate(Date())
             }
-            Text(editMode?.wrappedValue.isEditing.description ?? "none")
         }
+        .environment(\.editMode, $editMode)
     }
 }
 

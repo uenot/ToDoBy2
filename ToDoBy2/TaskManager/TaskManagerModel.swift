@@ -18,7 +18,7 @@ struct TaskManagerModel: Codable {
     
     init(days: [DayModel], date: Date = Date()) {
         self.days = days
-        currentDay = days.first { $0.date == date } ?? DayModel(date: date, tasks: [])
+        currentDay = days.first { $0.date == date } ?? DayModel(date: date)
     }
 }
 
@@ -35,7 +35,7 @@ extension TaskManagerModel {
     func getDay(for date: Date) -> DayModel {
         days.first {$0.date == date}
         ?? (currentDay.date == date ? currentDay : nil)
-        ?? DayModel(date: date, tasks: [])
+        ?? DayModel(date: date)
     }
     
     static func reducer(model: inout Self, action: Action) -> Void {

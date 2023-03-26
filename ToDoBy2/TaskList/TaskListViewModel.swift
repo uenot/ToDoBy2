@@ -25,8 +25,12 @@ extension TaskListViewModel {
     
     var tasks: [TaskModel] { model.tasks }
     var type: TaskListModel.ListType { model.type }
+    var otherType: TaskListModel.ListType { model.otherType }
 }
 
 extension TaskListViewModel {
-    static var sample = TaskListViewModel(model: .init(tasks: TaskModel.samples, type: .normal), reducer: TaskListModel.reducer)
+    static var samples = [
+        TaskListViewModel(model: TaskListModel.samples[0], reducer: TaskListModel.reducer),
+        TaskListViewModel(model: TaskListModel.samples[1], reducer: TaskListModel.reducer)
+    ]
 }

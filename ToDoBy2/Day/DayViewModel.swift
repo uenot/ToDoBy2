@@ -10,27 +10,39 @@ import SwiftUI
 typealias DayViewModel = ViewModel<DayModel, DayModel.Action>
 
 extension DayViewModel {
-    func createTaskViewModel(id: TaskModel.ID) -> TaskViewModel {
-        let convertModel: (DayModel) -> TaskModel = { model in model.tasks.first(where: { $0.id == id })! }
-        let convertAction: (TaskModel.Action) -> DayModel.Action = { action in
+    func createTaskListViewModel(id: TaskListModel.ID) -> TaskListViewModel {
+        let convertModel: (DayModel) -> TaskListModel = { model in model.taskLists.first(where: { $0.id == id })! }
+        let convertAction: (TaskListModel.Action) -> DayModel.Action = { action in
             switch action {
-            case .deleteSelf:
-                return .removeTask(id)
+            case let .moveTask(taskId):
+                let destId = self.taskLists.first { $0.id != id }!.id // only works for two lists
+                return .moveTask(taskId, id, destId)
             default:
-                return .editTask(id, action)
+                return .editList(id, action)
             }
         }
         return createSubViewModel(convertModel, convertAction)
     }
     
-    var tasks: [TaskModel] { model.tasks }
-    var date: Date { model.date }
+    var taskLists: [TaskListModel] { model.taskLists }
+    var baseList: TaskListModel { model.baseList }
+    var complete: Bool { model.complete }
+    var date: Date { model.id }
+    
+    func createTaskViewModel(id: TaskModel.ID) -> TaskViewModel {
+        let convertModel: (DayModel) -> TaskModel = { model in model.allTasks.first(where: { $0.id == id })! }
+        let convertAction: (TaskModel.Action) -> DayModel.Action = { action in
+            let targetList = self.taskLists.first { $0.tasks.contains { $0.id == id } }!
+            return .editList(targetList.id, .editTask(id, action))
+        }
+        return createSubViewModel(convertModel, convertAction)
+    }
     
     var header: String {
-        "Tasks for " + model.date.formatted(date: .abbreviated, time: .omitted)
+        "Tasks for " + model.id.formatted(date: .abbreviated, time: .omitted)
     }
 }
 
 extension DayViewModel {
-    static var sample = DayViewModel(model: .init(date: Date(), tasks: TaskModel.samples), reducer: DayModel.reducer)
+    static var sample = DayViewModel(model: DayModel.samples[0], reducer: DayModel.reducer)
 }

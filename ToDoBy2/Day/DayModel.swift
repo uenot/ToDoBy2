@@ -8,42 +8,41 @@
 import Foundation
 
 struct DayModel: Identifiable, Codable, Equatable {
-    typealias ID = UUID
-    private(set) var id = UUID()
-    let date: Date
-    private(set) var tasks: [TaskModel]
+    typealias ID = Date
+    var id: ID { date }
+    private(set) var date: Date
+    private(set) var taskLists: [TaskListModel] = [TaskListModel(tasks: [], type: .normal),
+                                                   TaskListModel(tasks: [], type: .optional)]
+    
+    var allTasks: [TaskModel] { taskLists.reduce([], { acc, taskList in acc + taskList.tasks }) }
+    var baseList: TaskListModel { taskLists.first { $0.type == .normal }! }
+    var complete: Bool {
+        baseList.tasks.count > 0 && baseList.tasks.allSatisfy { $0.isComplete }
+    }
 }
 
 extension DayModel {
-    
     enum Action {
-        case addTask(TaskModel)
-        case removeTask(TaskModel.ID)
-        case editTask(TaskModel.ID, TaskModel.Action)
-        case reorderTasks(IndexSet, Int)
-        case changeDay(Date)
+        case editList(TaskListModel.ID, TaskListModel.Action)
+        case moveTask(TaskModel.ID, TaskListModel.ID, TaskListModel.ID)
     }
     
-    static func reducer(model: inout Self, action: DayModel.Action) -> Void {
+    static func reducer(model: inout Self, action: Self.Action) -> Void {
         switch action {
-        case let .addTask(newTask):
-            model.tasks.append(newTask)
-        case let .removeTask(id):
-            model.tasks.removeAll(where: { $0.id == id })
-        case let .editTask(id, subAction):
-            let i = model.tasks.firstIndex(where: { $0.id == id })!
-            TaskModel.reducer(model: &model.tasks[i], action: subAction)
-        case let .reorderTasks(source, destination):
-            model.tasks.move(fromOffsets: source, toOffset: destination)
-        case .changeDay:
-            break
+        case let .editList(id, subAction):
+            let i = model.taskLists.firstIndex(where: { $0.id == id })!
+            TaskListModel.reducer(model: &model.taskLists[i], action: subAction)
+        case let .moveTask(taskId, sourceId, destId):
+            let task = model.taskLists.first { $0.id == sourceId }!
+                .tasks.first { $0.id == taskId }!
+            reducer(model: &model, action: .editList(sourceId, .removeTask(taskId)))
+            reducer(model: &model, action: .editList(destId, .addTask(task)))
         }
     }
 }
 
 extension DayModel {
     static let samples = [
-        DayModel(date: Date(), tasks: Array(TaskModel.samples[0..<4])),
-        DayModel(date: Date()+1, tasks: Array(TaskModel.samples[4..<8]))
+        DayModel(date: Date(), taskLists: TaskListModel.samples)
     ]
 }

@@ -14,7 +14,7 @@ extension TaskManagerViewModel {
         let convertModel: (TaskManagerModel) -> DayModel = { model in
             model.days.first { $0.id == day.id }
             ?? (model.currentDay.id == day.id ? model.currentDay : nil)
-            ?? DayModel(date: day.date, tasks: [])
+            ?? DayModel(date: day.date)
         }
         let convertAction: (DayModel.Action) -> TaskManagerModel.Action = { action in
                 .editDay(day.id, action)
