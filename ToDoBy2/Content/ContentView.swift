@@ -32,6 +32,8 @@ struct ContentView: View {
         NavigationStack {
             ZStack {
                 homeView
+                    .animation(.easeInOut(duration: 0.4), value: homeViewType)
+                    .transition(.asymmetric(insertion: .slide, removal: .opacity))
                 Sidebar(destination: $homeViewType, displaySidebar: $displaySidebar)
             }
                 .toolbar {
