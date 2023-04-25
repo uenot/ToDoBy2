@@ -12,7 +12,7 @@ struct DayView: View {
     @ObservedObject var vm: DayViewModel
     
     @Binding var displayDatePicker: Bool
-    @State var editMode: EditMode = .inactive
+    @Environment(\.editMode) var editMode
     
     let jumpToDate: (Date) -> Void
     var selectedDate: Binding<Date> {
@@ -27,7 +27,7 @@ struct DayView: View {
     }
     
     var body: some View {
-        NavigationStack {
+        VStack {
             Text(vm.header)
                 .font(.system(.largeTitle, design: .rounded).weight(.bold))
                 .opacity(vm.complete ? 0.75 : 1)
@@ -52,23 +52,6 @@ struct DayView: View {
                     }
                 }
             }
-            .navigationDestination(for: TaskModel.ID.self) { id in
-                TaskView(vm: vm.createTaskViewModel(id: id))
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        withAnimation {
-                            displayDatePicker.toggle()
-                        }
-                    } label: {
-                        Image(systemName: "calendar")
-                    }
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-            }
             Button("Add Task") {
                 vm.send(.editList(vm.baseList.id, .addTask(TaskModel(title: "New Task"))))
             }
@@ -77,7 +60,6 @@ struct DayView: View {
                 jumpToDate(Date())
             }
         }
-        .environment(\.editMode, $editMode)
     }
 }
 

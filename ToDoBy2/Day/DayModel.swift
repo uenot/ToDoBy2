@@ -13,8 +13,6 @@ struct DayModel: Identifiable, Codable, Equatable {
     private(set) var date: Date
     private(set) var taskLists: [TaskListModel] = [TaskListModel(tasks: [], type: .normal),
                                                    TaskListModel(tasks: [], type: .optional)]
-    
-    var allTasks: [TaskModel] { taskLists.reduce([], { acc, taskList in acc + taskList.tasks }) }
     var baseList: TaskListModel { taskLists.first { $0.type == .normal }! }
     var complete: Bool {
         baseList.tasks.count > 0 && baseList.tasks.allSatisfy { $0.isComplete }

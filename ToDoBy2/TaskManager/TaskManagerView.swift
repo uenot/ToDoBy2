@@ -10,7 +10,6 @@ import SwiftUI
 struct TaskManagerView: View {
     
     @ObservedObject var vm: TaskManagerViewModel
-    @Environment(\.scenePhase) private var scenePhase
     
     @State private var displayDatePicker = false
     
@@ -36,6 +35,9 @@ struct TaskManagerView: View {
         }
     }
     
+    // uhmm if you print the window we get day, day+1, day+2
+    // should be day-1, day, day+1
+    // why? and why does it still work????
     @State private var window: [DayModel] = []
     
     func setWindow(to date: Date) {
@@ -88,16 +90,26 @@ struct TaskManagerView: View {
                 .gesture(swipeGesture(width: geometry.size.width))
             }
         }
-        .onChange(of: scenePhase) { phase in
-            if (phase == .inactive) {
-                Task {
-                    await vm.save()
+        .navigationDestination(for: TaskModel.ID.self) { id in
+            TaskView(vm: vm.createTaskViewModel(id: id))
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    withAnimation {
+                        displayDatePicker.toggle()
+                    }
+                } label: {
+                    Image(systemName: "calendar")
                 }
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                EditButton()
             }
         }
         .onChange(of: vm.currentDate) { _ in
             displayDatePicker = false
-            setWindow(to: vm.currentDate) // necessary for first load-in
+//            setWindow(to: vm.currentDate) // necessary for first load-in
         }
         .onAppear {
             setWindow(to: vm.currentDate)
@@ -107,6 +119,8 @@ struct TaskManagerView: View {
 
 struct TaskManagerView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskManagerView(vm: TaskManagerViewModel.sample)
+        NavigationStack {
+            TaskManagerView(vm: TaskManagerViewModel.sample)
+        }
     }
 }

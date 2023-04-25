@@ -29,39 +29,31 @@ extension TaskManagerViewModel {
         model.getDay(for: date)
     }
     
-    private func fileURL() throws -> URL {
-        try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-            .appendingPathComponent("taskmanager.json")
-    }
+    // this is fucking grosssssss
+    // every call to allX iterateas through all possible X
+    // action-capturing should be done in each respective component
+    // solution: refactor those functions to each component
+    // may need to take in IDs of parents, which is fine?
+    // at the beginning of this func: perform one search for appropro day/tasklist ID
+    // use those to get convertModel/convertAction in constant time afterwards
     
-    func load() async -> Void {
-        let newModel = await Task(priority: .background) {
-            do {
-                let url = try fileURL()
-                let file = try FileHandle(forReadingFrom: url)
-                let result = try JSONDecoder().decode(TaskManagerModel.self, from: file.availableData)
-                return result
-            } catch {
-                print(error.localizedDescription)
-                return TaskManagerModel(days: [])
-            }
-        }.value
-        self.send(.load(newModel))
-    }
+    // ideally abstract knowledge of deeper children from parent
+    // but highest priority is abstracting parents from children
     
-    func save() async -> Void {
-        Task(priority: .background) {
-            do {
-                let data = try JSONEncoder().encode(model)
-                let url = try fileURL()
-                try data.write(to: url)
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
+    // it seems like we have to get the IDs of parents of TaskModel here anyways
+    // alternative: call cascading createSubViewModels from day to tasklist to task
+    
+    func createTaskViewModel(id: TaskModel.ID) -> TaskViewModel {
+        
+        let dayID = days.first { $0.taskLists.contains { $0.tasks.contains { $0.id == id } } }!
+        let listID = days.flatMap { $0.taskLists }.first { $0.tasks.contains { $0.id == id } }!.id
+        
+        return createDayViewModel(day: dayID)
+            .createTaskListViewModel(id: listID)
+            .createTaskViewModel(id: id)
     }
 }
 
 extension TaskManagerViewModel {
-    static var sample = TaskManagerViewModel(model: .init(days: DayModel.samples), reducer: TaskManagerModel.reducer)
+    static var sample = TaskManagerViewModel(model: TaskManagerModel.sample, reducer: TaskManagerModel.reducer)
 }

@@ -29,7 +29,6 @@ extension TaskManagerModel {
         case removeDay(DayModel.ID)
         case editDay(DayModel.ID, DayModel.Action)
         case setDate(Date)
-        case load(TaskManagerModel)
     }
     
     func getDay(for date: Date) -> DayModel {
@@ -53,8 +52,6 @@ extension TaskManagerModel {
             }
         case let .setDate(newDate):
             model.currentDay = model.getDay(for: newDate)
-        case let .load(newModel):
-            model = newModel
         }
     }
 }
