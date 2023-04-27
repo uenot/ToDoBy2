@@ -29,7 +29,7 @@ struct DayView: View {
     var body: some View {
         VStack {
             Text(vm.header)
-                .font(.system(.largeTitle, design: .rounded).weight(.bold))
+                .customTitleStyle()
                 .opacity(vm.complete ? 0.75 : 1)
                 .strikethrough(vm.complete)
                 .foregroundColor(vm.complete ? .green : nil)

@@ -14,11 +14,12 @@ struct ContentView: View {
     
     // maybe move to model if we want this to persist
     @State private var homeViewType: Destination = .mainTM
-    @ViewBuilder
-    private var homeView: some View {
+    @ViewBuilder private var homeView: some View {
         switch homeViewType {
         case .mainTM:
             TaskManagerView(vm: vm.createTaskManagerViewModel())
+        case .goals:
+            GoalManagerView(vm: vm.createGoalManagerViewModel())
         case .credits:
             Credits()
         default:

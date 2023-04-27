@@ -19,7 +19,7 @@ struct Sidebar: View {
     var content: some View {
         VStack {
             Text("ToDoBy2")
-                .font(.system(.largeTitle, design: .rounded).weight(.bold))
+                .customTitleStyle()
                 .onTapGesture {
                     destination = .mainTM
                     displaySidebar.toggle()

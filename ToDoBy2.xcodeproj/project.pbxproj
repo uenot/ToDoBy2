@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		A009B04129F82D3A0064351B /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A009B04029F82D3A0064351B /* ArrayExtension.swift */; };
 		A009B04429F82DDC0064351B /* Credits.swift in Sources */ = {isa = PBXBuildFile; fileRef = A009B04329F82DDC0064351B /* Credits.swift */; };
+		A009B04929F87AA30064351B /* GoalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A009B04829F87AA30064351B /* GoalModel.swift */; };
+		A009B04B29F881540064351B /* GoalManagerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A009B04A29F881540064351B /* GoalManagerModel.swift */; };
+		A009B04F29F8C0890064351B /* GoalManagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A009B04E29F8C0890064351B /* GoalManagerViewModel.swift */; };
+		A009B05129F8C1D60064351B /* GoalManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A009B05029F8C1D60064351B /* GoalManagerView.swift */; };
+		A009B05329F9931C0064351B /* GoalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A009B05229F9931C0064351B /* GoalViewModel.swift */; };
+		A009B05529F9933B0064351B /* GoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A009B05429F9933B0064351B /* GoalView.swift */; };
 		A03DB19229AE8C0B0017E77A /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03DB19129AE8C0B0017E77A /* DateExtension.swift */; };
 		A043F8A529C0C914002D560A /* TaskListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A043F8A429C0C914002D560A /* TaskListModel.swift */; };
 		A043F8A729C0CB36002D560A /* TaskListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A043F8A629C0CB36002D560A /* TaskListViewModel.swift */; };
@@ -30,6 +36,7 @@
 		A0AA7907296E443C00D7DA09 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AA7906296E443C00D7DA09 /* ContentView.swift */; };
 		A0AA7909296E443D00D7DA09 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0AA7908296E443D00D7DA09 /* Assets.xcassets */; };
 		A0AA790D296E443D00D7DA09 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0AA790C296E443D00D7DA09 /* Preview Assets.xcassets */; };
+		A0D45C0E29FAD16A008192ED /* CustomTitleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D45C0D29FAD16A008192ED /* CustomTitleStyle.swift */; };
 		A0DF9FFC29B1048000ACD503 /* TaskManagerViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DF9FFB29B1048000ACD503 /* TaskManagerViewConstants.swift */; };
 		A0FACEFE29F7282600A40224 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FACEFD29F7282600A40224 /* ContentViewModel.swift */; };
 		A0FACF0029F7285800A40224 /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FACEFF29F7285800A40224 /* ContentModel.swift */; };
@@ -38,6 +45,12 @@
 /* Begin PBXFileReference section */
 		A009B04029F82D3A0064351B /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		A009B04329F82DDC0064351B /* Credits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credits.swift; sourceTree = "<group>"; };
+		A009B04829F87AA30064351B /* GoalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalModel.swift; sourceTree = "<group>"; };
+		A009B04A29F881540064351B /* GoalManagerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalManagerModel.swift; sourceTree = "<group>"; };
+		A009B04E29F8C0890064351B /* GoalManagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalManagerViewModel.swift; sourceTree = "<group>"; };
+		A009B05029F8C1D60064351B /* GoalManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalManagerView.swift; sourceTree = "<group>"; };
+		A009B05229F9931C0064351B /* GoalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalViewModel.swift; sourceTree = "<group>"; };
+		A009B05429F9933B0064351B /* GoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalView.swift; sourceTree = "<group>"; };
 		A03DB19129AE8C0B0017E77A /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		A043F8A429C0C914002D560A /* TaskListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListModel.swift; sourceTree = "<group>"; };
 		A043F8A629C0CB36002D560A /* TaskListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewModel.swift; sourceTree = "<group>"; };
@@ -61,6 +74,7 @@
 		A0AA7908296E443D00D7DA09 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A0AA790A296E443D00D7DA09 /* ToDoBy2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ToDoBy2.entitlements; sourceTree = "<group>"; };
 		A0AA790C296E443D00D7DA09 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A0D45C0D29FAD16A008192ED /* CustomTitleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTitleStyle.swift; sourceTree = "<group>"; };
 		A0DF9FFB29B1048000ACD503 /* TaskManagerViewConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManagerViewConstants.swift; sourceTree = "<group>"; };
 		A0FACEFD29F7282600A40224 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		A0FACEFF29F7285800A40224 /* ContentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentModel.swift; sourceTree = "<group>"; };
@@ -84,6 +98,46 @@
 				A009B04029F82D3A0064351B /* ArrayExtension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		A009B04629F878430064351B /* MainTaskManager */ = {
+			isa = PBXGroup;
+			children = (
+				A0894F732974D8450016C4AF /* Task */,
+				A043F8A329C0C8E8002D560A /* TaskList */,
+				A0894F6C2974D36D0016C4AF /* Day */,
+				A0894F652974D2C90016C4AF /* TaskManager */,
+			);
+			path = MainTaskManager;
+			sourceTree = "<group>";
+		};
+		A009B04729F87A530064351B /* GoalManager */ = {
+			isa = PBXGroup;
+			children = (
+				A009B05629F993400064351B /* Goal */,
+				A009B05729F993460064351B /* GoalManager */,
+			);
+			path = GoalManager;
+			sourceTree = "<group>";
+		};
+		A009B05629F993400064351B /* Goal */ = {
+			isa = PBXGroup;
+			children = (
+				A009B04829F87AA30064351B /* GoalModel.swift */,
+				A009B05229F9931C0064351B /* GoalViewModel.swift */,
+				A009B05429F9933B0064351B /* GoalView.swift */,
+			);
+			path = Goal;
+			sourceTree = "<group>";
+		};
+		A009B05729F993460064351B /* GoalManager */ = {
+			isa = PBXGroup;
+			children = (
+				A009B04A29F881540064351B /* GoalManagerModel.swift */,
+				A009B04E29F8C0890064351B /* GoalManagerViewModel.swift */,
+				A009B05029F8C1D60064351B /* GoalManagerView.swift */,
+			);
+			path = GoalManager;
 			sourceTree = "<group>";
 		};
 		A043F8A329C0C8E8002D560A /* TaskList */ = {
@@ -157,13 +211,12 @@
 			isa = PBXGroup;
 			children = (
 				A0AA7904296E443C00D7DA09 /* ToDoBy2App.swift */,
-				A009B04329F82DDC0064351B /* Credits.swift */,
-				A074973C29F0853500081560 /* Navigation */,
 				A0FACF0129F7285F00A40224 /* Content */,
-				A0894F732974D8450016C4AF /* Task */,
-				A043F8A329C0C8E8002D560A /* TaskList */,
-				A0894F6C2974D36D0016C4AF /* Day */,
-				A0894F652974D2C90016C4AF /* TaskManager */,
+				A074973C29F0853500081560 /* Navigation */,
+				A009B04629F878430064351B /* MainTaskManager */,
+				A009B04729F87A530064351B /* GoalManager */,
+				A009B04329F82DDC0064351B /* Credits.swift */,
+				A0D45C0F29FAD16F008192ED /* Modifiers */,
 				A0894F7C2975DC530016C4AF /* ViewModel.swift */,
 				A009B04229F82D3F0064351B /* Extensions */,
 				A0AA7908296E443D00D7DA09 /* Assets.xcassets */,
@@ -179,6 +232,14 @@
 				A0AA790C296E443D00D7DA09 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		A0D45C0F29FAD16F008192ED /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				A0D45C0D29FAD16A008192ED /* CustomTitleStyle.swift */,
+			);
+			path = Modifiers;
 			sourceTree = "<group>";
 		};
 		A0FACF0129F7285F00A40224 /* Content */ = {
@@ -219,7 +280,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					A0AA7900296E443C00D7DA09 = {
 						CreatedOnToolsVersion = 14.2;
@@ -268,8 +329,15 @@
 				A0894F6B2974D3220016C4AF /* TaskManagerView.swift in Sources */,
 				A0894F772974D9020016C4AF /* TaskView.swift in Sources */,
 				A074973E29F0855C00081560 /* Destinations.swift in Sources */,
+				A009B05529F9933B0064351B /* GoalView.swift in Sources */,
+				A0D45C0E29FAD16A008192ED /* CustomTitleStyle.swift in Sources */,
+				A009B05329F9931C0064351B /* GoalViewModel.swift in Sources */,
 				A0FACF0029F7285800A40224 /* ContentModel.swift in Sources */,
 				A0894F752974D8510016C4AF /* TaskModel.swift in Sources */,
+				A009B05129F8C1D60064351B /* GoalManagerView.swift in Sources */,
+				A009B04929F87AA30064351B /* GoalModel.swift in Sources */,
+				A009B04B29F881540064351B /* GoalManagerModel.swift in Sources */,
+				A009B04F29F8C0890064351B /* GoalManagerViewModel.swift in Sources */,
 				A0894F7D2975DC530016C4AF /* ViewModel.swift in Sources */,
 				A009B04129F82D3A0064351B /* ArrayExtension.swift in Sources */,
 				A0894F7F29760F030016C4AF /* TaskViewModel.swift in Sources */,
@@ -324,6 +392,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -382,6 +451,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -408,6 +478,7 @@
 				CODE_SIGN_ENTITLEMENTS = ToDoBy2/ToDoBy2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ToDoBy2/Preview Content\"";
 				DEVELOPMENT_TEAM = K9L75UQUEP;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -446,6 +517,7 @@
 				CODE_SIGN_ENTITLEMENTS = ToDoBy2/ToDoBy2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ToDoBy2/Preview Content\"";
 				DEVELOPMENT_TEAM = K9L75UQUEP;
 				ENABLE_HARDENED_RUNTIME = YES;

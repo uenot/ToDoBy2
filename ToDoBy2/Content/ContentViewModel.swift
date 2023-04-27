@@ -20,6 +20,16 @@ extension ContentViewModel {
         return createSubViewModel(convertModel, convertAction)
     }
     
+    func createGoalManagerViewModel() -> GoalManagerViewModel {
+        let convertModel: (ContentModel) -> GoalManagerModel = { model in
+            model.goalManager
+        }
+        let convertAction: (GoalManagerModel.Action) -> ContentModel.Action = { action in
+                .editGoalManager(action)
+        }
+        return createSubViewModel(convertModel, convertAction)
+    }
+    
     private func fileURL() throws -> URL {
         try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             .appendingPathComponent("content.json")
